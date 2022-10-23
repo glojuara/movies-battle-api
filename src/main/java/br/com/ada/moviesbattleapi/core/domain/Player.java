@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Player {
 
+    private Integer id;
     private String username;
 
     public Player(String username) {
@@ -20,4 +21,13 @@ public class Player {
     public String getUsername() {
         return username;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
 }

@@ -1,4 +1,4 @@
-package br.com.ada.moviesbattleapi.core.domain;
+package br.com.ada.moviesbattleapi.core.domain.exception;
 
 public class GameException extends RuntimeException {
 

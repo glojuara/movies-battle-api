@@ -1,10 +1,11 @@
 package br.com.ada.moviesbattleapi.core.usecase;
 
-import br.com.ada.moviesbattleapi.infrastructure.repository.GameRepository;
-import br.com.ada.moviesbattleapi.infrastructure.repository.RoundMoviesRepository;
-import br.com.ada.moviesbattleapi.infrastructure.repository.RoundRepository;
-import br.com.ada.moviesbattleapi.infrastructure.repository.entity.GameEntity;
-import br.com.ada.moviesbattleapi.infrastructure.repository.entity.RoundEntity;
+import br.com.ada.moviesbattleapi.core.domain.Game;
+import br.com.ada.moviesbattleapi.core.domain.GameStatus;
+import br.com.ada.moviesbattleapi.core.domain.Round;
+import br.com.ada.moviesbattleapi.core.domain.exception.RoundStatus;
+import br.com.ada.moviesbattleapi.core.ports.GameGateway;
+import br.com.ada.moviesbattleapi.core.ports.RoundGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,39 +17,35 @@ import java.util.Objects;
 public class EndGameUseCase {
 
     @Autowired
-    private GameRepository gameRepository;
+    private GameGateway gameGateway;
 
     @Autowired
-    private RoundRepository roundRepository;
-
-    @Autowired
-    private RoundMoviesRepository roundMoviesRepository;
+    private RoundGateway roundGateway;
 
     @Transactional
     public void execute(String username) {
 
-//        GameEntity gameEntity = gameRepository.findById(1).get();
-//
-//        RoundEntity round = roundRepository.findById(2).get();
-//        gameEntity.removeRound(round);
-//
-//        gameRepository.save(gameEntity);
-//        roundRepository.deleteById(2);
-
-
-        GameEntity game = gameRepository.findByStatusAndPlayerUsername("ACTIVE", username);
+        Game game = gameGateway.findByStatusAndPlayerUsername(GameStatus.ACTIVE.name(), username);
         if (Objects.nonNull(game)) {
-            game.setStatus("GAME_OVER");
-            List<RoundEntity> pendingRounds = roundRepository.findByGameIdAndStatus(game.getId(), "PENDING");
-
-
-            pendingRounds.forEach(roundEntity -> {
-                game.removeRound(roundEntity);
-//                roundMoviesRepository.deleteByRoundId(roundEntity.getId());
-            });
-            gameRepository.save(game);
-            roundRepository.deleteAll(pendingRounds);
+            game.setGameStatus(GameStatus.GAME_OVER);
+            List<Round> pendingRounds = roundGateway.findByGameIdAndStatus(game.getId(), RoundStatus.PENDING.name());
+            pendingRounds.forEach(game::removeRound);
+            gameGateway.save(game);
+            roundGateway.deleteAll(pendingRounds);
         }
     }
+
+//    @Transactional
+//    public void execute2(String username) {
+//
+//        GameEntity game = gameRepository.findByStatusAndPlayerUsername(GameStatus.ACTIVE.name(), username);
+//        if (Objects.nonNull(game)) {
+//            game.setStatus(GameStatus.GAME_OVER.name());
+//            List<RoundEntity> pendingRounds = roundRepository.findByGameIdAndStatus(game.getId(), RoundStatus.PENDING.name());
+//            pendingRounds.forEach(roundEntity -> game.removeRound(roundEntity));
+//            gameRepository.save(game);
+//            roundRepository.deleteAll(pendingRounds);
+//        }
+//    }
 
 }

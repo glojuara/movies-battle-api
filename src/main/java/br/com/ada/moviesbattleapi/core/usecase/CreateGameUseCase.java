@@ -1,60 +1,46 @@
 package br.com.ada.moviesbattleapi.core.usecase;
 
 import br.com.ada.moviesbattleapi.core.domain.*;
-import br.com.ada.moviesbattleapi.infrastructure.repository.GameRepository;
-import br.com.ada.moviesbattleapi.infrastructure.repository.MovieRepository;
-import br.com.ada.moviesbattleapi.infrastructure.repository.PlayerRepository;
-import br.com.ada.moviesbattleapi.infrastructure.repository.entity.GameEntity;
-import br.com.ada.moviesbattleapi.infrastructure.repository.entity.MovieEntity;
-import br.com.ada.moviesbattleapi.infrastructure.repository.entity.PlayerEntity;
-import br.com.ada.moviesbattleapi.infrastructure.repository.mapper.GameEntityMapper;
-import br.com.ada.moviesbattleapi.infrastructure.repository.mapper.MovieEntityMapper;
-import br.com.ada.moviesbattleapi.infrastructure.repository.mapper.PlayerEntityMapper;
+import br.com.ada.moviesbattleapi.core.ports.GameGateway;
+import br.com.ada.moviesbattleapi.core.ports.MovieGateway;
+import br.com.ada.moviesbattleapi.core.ports.PlayerGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 public class CreateGameUseCase {
 
     @Autowired
-    private FindMoviesUseCase findMoviesUseCase;
+    private MovieGateway movieGateway;
 
     @Autowired
-    private MovieRepository movieRepository;
+    private GameGateway gameGateway;
 
     @Autowired
-    private GameRepository gameRepository;
-
-    @Autowired
-    private PlayerRepository playerRepository;
+    private PlayerGateway playerGateway;
 
     @Transactional
     public Game execute(String username) {
 
-        GameEntity activeGameSession = gameRepository.findByStatusAndPlayerUsername("ACTIVE", username);
-        if (Objects.nonNull(activeGameSession)) {
-            return GameEntityMapper.map(activeGameSession);
+        Game activeGame = gameGateway.findByStatusAndPlayerUsername(GameStatus.ACTIVE.name(), username);
+        if (Objects.nonNull(activeGame)) {
+            return activeGame;
         }
 
-        PlayerEntity playerEntity = playerRepository.findByUsername(username);
-        Player player = PlayerEntityMapper.map(playerEntity);
+        Player player = playerGateway.findByUsername(username);
+        List<Movie> movies = movieGateway.findAll();
 
-        List<Movie> movies = findMoviesUseCase.execute();
+        Game game = new GameBuilder()
+                .withPlayer(player)
+                .withMovies(movies)
+                .build();
 
-        Game game = new Game(player);
-        game.buildRounds(movies);
+        return gameGateway.save(game);
 
-        GameEntity gameEntity = GameEntityMapper.from(game);
-        gameEntity.setPlayer(playerEntity);
-
-        GameEntity savedEntity = gameRepository.save(gameEntity);
-        return GameEntityMapper.map(savedEntity);
     }
-
 
 }

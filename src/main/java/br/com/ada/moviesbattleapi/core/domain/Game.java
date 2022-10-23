@@ -1,9 +1,8 @@
 package br.com.ada.moviesbattleapi.core.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import br.com.ada.moviesbattleapi.core.domain.exception.GameException;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
@@ -16,6 +15,7 @@ public class Game {
 
     private Integer id;
     private Player player;
+    private GameStatus gameStatus;
     private List<Round> rounds;
     private Iterator<Round> roundIterator;
 
@@ -28,10 +28,10 @@ public class Game {
 
     public Game(Player player, List<Round> rounds) {
         this(player);
-        if (Objects.isNull(rounds) || rounds.isEmpty()) {
+        if (Objects.isNull(rounds)) {
             throw new GameException("The rounds is required");
         }
-        this.rounds = List.copyOf(rounds);
+        this.rounds = new ArrayList(rounds);
         this.roundIterator = this.rounds.iterator();
     }
 
@@ -40,8 +40,7 @@ public class Game {
     }
 
     public void buildRounds(List<Movie> movies) {
-        List<Round> rounds = List.copyOf(RoundsBuilder.buildRounds(this, movies));
-        this.rounds = rounds;
+        this.rounds = new ArrayList<>(RoundsBuilder.buildRounds(this, movies));
         this.roundIterator = this.rounds.iterator();
     }
 
@@ -53,11 +52,23 @@ public class Game {
         return rounds;
     }
 
+    public void removeRound(Round round) {
+        this.rounds.removeIf(r -> r.getId() == round.getId());
+    }
+
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public GameStatus getGameStatus() {
+        return gameStatus;
+    }
+
+    public void setGameStatus(GameStatus gameStatus) {
+        this.gameStatus = gameStatus;
     }
 }

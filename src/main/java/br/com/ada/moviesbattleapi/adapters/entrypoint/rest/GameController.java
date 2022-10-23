@@ -1,9 +1,6 @@
-package br.com.ada.moviesbattleapi.entrypoint.rest;
+package br.com.ada.moviesbattleapi.adapters.entrypoint.rest;
 
 import br.com.ada.moviesbattleapi.core.domain.Game;
-import br.com.ada.moviesbattleapi.core.domain.GameException;
-import br.com.ada.moviesbattleapi.core.domain.Player;
-import br.com.ada.moviesbattleapi.core.domain.Round;
 import br.com.ada.moviesbattleapi.core.usecase.CreateGameUseCase;
 import br.com.ada.moviesbattleapi.core.usecase.EndGameUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Objects;
 
 @RestController
 @RequestMapping("game")

@@ -12,6 +12,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Round {
 
+    private Integer id;
     private Game game;
     private List<Movie> movies;
 
@@ -22,6 +23,14 @@ public class Round {
     public Round(Game game, List<Movie> movies) {
         this(movies);
         this.game = game;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public List<Movie> getMovies() {
