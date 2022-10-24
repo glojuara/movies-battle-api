@@ -1,4 +1,8 @@
-package br.com.ada.moviesbattleapi.core.domain;
+package br.com.ada.moviesbattleapi.core.domain.builders;
+
+import br.com.ada.moviesbattleapi.core.domain.Game;
+import br.com.ada.moviesbattleapi.core.domain.Movie;
+import br.com.ada.moviesbattleapi.core.domain.Round;
 
 import java.util.ArrayList;
 import java.util.Arrays;

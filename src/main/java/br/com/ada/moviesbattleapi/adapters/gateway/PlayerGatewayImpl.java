@@ -1,6 +1,6 @@
 package br.com.ada.moviesbattleapi.adapters.gateway;
 
-import br.com.ada.moviesbattleapi.adapters.gateway.mapper.PlayerEntityMapper;
+import br.com.ada.moviesbattleapi.adapters.gateway.mapper.entity.PlayerEntityMapper;
 import br.com.ada.moviesbattleapi.core.domain.Player;
 import br.com.ada.moviesbattleapi.core.ports.PlayerGateway;
 import br.com.ada.moviesbattleapi.infrastructure.repository.PlayerRepository;

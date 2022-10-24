@@ -1,5 +1,6 @@
 package br.com.ada.moviesbattleapi.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -12,7 +13,9 @@ public class Movie {
 
     private Integer id;
     private String title;
+    @JsonIgnore
     private String partner;
+    @JsonIgnore
     private String partnerId;
 
     public Movie(Integer id, String title, String partner, String partnerId) {

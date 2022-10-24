@@ -1,6 +1,9 @@
 package br.com.ada.moviesbattleapi.core.usecase;
 
-import br.com.ada.moviesbattleapi.core.domain.*;
+import br.com.ada.moviesbattleapi.core.domain.Game;
+import br.com.ada.moviesbattleapi.core.domain.builders.GameBuilder;
+import br.com.ada.moviesbattleapi.core.domain.Movie;
+import br.com.ada.moviesbattleapi.core.domain.Player;
 import br.com.ada.moviesbattleapi.core.ports.GameGateway;
 import br.com.ada.moviesbattleapi.core.ports.MovieGateway;
 import br.com.ada.moviesbattleapi.core.ports.PlayerGateway;
@@ -9,10 +12,12 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class CreateGameUseCase {
+
+    @Autowired
+    private PlayerGateway playerGateway;
 
     @Autowired
     private MovieGateway movieGateway;
@@ -20,16 +25,8 @@ public class CreateGameUseCase {
     @Autowired
     private GameGateway gameGateway;
 
-    @Autowired
-    private PlayerGateway playerGateway;
-
     @Transactional
     public Game execute(String username) {
-
-        Game activeGame = gameGateway.findByStatusAndPlayerUsername(GameStatus.ACTIVE.name(), username);
-        if (Objects.nonNull(activeGame)) {
-            return activeGame;
-        }
 
         Player player = playerGateway.findByUsername(username);
         List<Movie> movies = movieGateway.findAll();
@@ -40,7 +37,6 @@ public class CreateGameUseCase {
                 .build();
 
         return gameGateway.save(game);
-
     }
 
 }

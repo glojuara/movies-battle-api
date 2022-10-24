@@ -5,12 +5,10 @@ import br.com.ada.moviesbattleapi.core.ports.GameGateway;
 import br.com.ada.moviesbattleapi.infrastructure.repository.GameRepository;
 import br.com.ada.moviesbattleapi.infrastructure.repository.PlayerRepository;
 import br.com.ada.moviesbattleapi.infrastructure.repository.entity.GameEntity;
-import br.com.ada.moviesbattleapi.adapters.gateway.mapper.GameEntityMapper;
+import br.com.ada.moviesbattleapi.adapters.gateway.mapper.entity.GameEntityMapper;
 import br.com.ada.moviesbattleapi.infrastructure.repository.entity.PlayerEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Objects;
 
 @Service
 public class GameGatewayImpl implements GameGateway {
@@ -23,7 +21,13 @@ public class GameGatewayImpl implements GameGateway {
 
     @Override
     public Game findByStatusAndPlayerUsername(String status, String username) {
-        GameEntity gameEntity = gameRepository.findByStatusAndPlayerUsername(status, username);
+        GameEntity gameEntity = gameRepository.findFirstByStatusAndPlayerUsername(status, username);
+        return GameEntityMapper.map(gameEntity);
+    }
+
+    @Override
+    public Game findById(Integer id) {
+        GameEntity gameEntity = gameRepository.findById(id).orElse(null);
         return GameEntityMapper.map(gameEntity);
     }
 

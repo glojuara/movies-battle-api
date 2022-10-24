@@ -20,7 +20,7 @@ public class GameEntity {
     @JsonIgnore
     private PlayerEntity player;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+    @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST })
     @JoinColumn(name = "game_id")
     private List<RoundEntity> rounds = new ArrayList();
 

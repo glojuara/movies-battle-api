@@ -1,4 +1,10 @@
-package br.com.ada.moviesbattleapi.core.domain;
+package br.com.ada.moviesbattleapi.core.domain.builders;
+
+import br.com.ada.moviesbattleapi.core.domain.Game;
+import br.com.ada.moviesbattleapi.core.domain.Movie;
+import br.com.ada.moviesbattleapi.core.domain.Player;
+import br.com.ada.moviesbattleapi.core.domain.Round;
+import br.com.ada.moviesbattleapi.core.domain.enums.GameStatus;
 
 import java.util.List;
 import java.util.Objects;

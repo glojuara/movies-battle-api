@@ -6,26 +6,15 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
-import java.util.List;
-
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Round {
+public class Ranking {
 
     private Integer id;
+    private Double score;
     @JsonIgnore
     private Game game;
-    private List<Movie> movies;
-
-    public Round(List<Movie> movies) {
-        this.movies = List.copyOf(movies);
-    }
-
-    public Round(Game game, List<Movie> movies) {
-        this(movies);
-        this.game = game;
-    }
 
     public Integer getId() {
         return id;
@@ -35,8 +24,12 @@ public class Round {
         this.id = id;
     }
 
-    public List<Movie> getMovies() {
-        return List.copyOf(movies);
+    public Double getScore() {
+        return score;
+    }
+
+    public void setScore(Double score) {
+        this.score = score;
     }
 
     public Game getGame() {
@@ -45,5 +38,9 @@ public class Round {
 
     public void setGame(Game game) {
         this.game = game;
+    }
+
+    public String getUsername() {
+        return this.game.getPlayer().getUsername();
     }
 }

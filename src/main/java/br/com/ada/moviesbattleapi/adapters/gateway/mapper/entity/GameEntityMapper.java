@@ -1,7 +1,7 @@
-package br.com.ada.moviesbattleapi.adapters.gateway.mapper;
+package br.com.ada.moviesbattleapi.adapters.gateway.mapper.entity;
 
 import br.com.ada.moviesbattleapi.core.domain.Game;
-import br.com.ada.moviesbattleapi.core.domain.GameStatus;
+import br.com.ada.moviesbattleapi.core.domain.enums.GameStatus;
 import br.com.ada.moviesbattleapi.core.domain.Player;
 import br.com.ada.moviesbattleapi.core.domain.Round;
 import br.com.ada.moviesbattleapi.infrastructure.repository.entity.GameEntity;

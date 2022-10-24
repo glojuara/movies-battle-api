@@ -1,10 +1,13 @@
 package br.com.ada.moviesbattleapi.core.usecase;
 
 import br.com.ada.moviesbattleapi.core.domain.Game;
-import br.com.ada.moviesbattleapi.core.domain.GameStatus;
+import br.com.ada.moviesbattleapi.core.domain.enums.GameStatus;
+import br.com.ada.moviesbattleapi.core.domain.Ranking;
 import br.com.ada.moviesbattleapi.core.domain.Round;
-import br.com.ada.moviesbattleapi.core.domain.exception.RoundStatus;
+import br.com.ada.moviesbattleapi.core.domain.exception.GameAlreadyFinishedException;
+import br.com.ada.moviesbattleapi.core.domain.exception.GameNotStartedException;
 import br.com.ada.moviesbattleapi.core.ports.GameGateway;
+import br.com.ada.moviesbattleapi.core.ports.RankingGateway;
 import br.com.ada.moviesbattleapi.core.ports.RoundGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,35 +20,43 @@ import java.util.Objects;
 public class EndGameUseCase {
 
     @Autowired
-    private GameGateway gameGateway;
+    private FindActiveGameUseCase findActiveGameUseCase;
+
+    @Autowired
+    private FindPendingRoundsUseCase findPendingRoundsUseCase;
 
     @Autowired
     private RoundGateway roundGateway;
 
-    @Transactional
-    public void execute(String username) {
+    @Autowired
+    private GameGateway gameGateway;
 
-        Game game = gameGateway.findByStatusAndPlayerUsername(GameStatus.ACTIVE.name(), username);
+    @Autowired
+    private RankingGateway rankingGateway;
+
+    @Autowired
+    private CalculateGameScoreUseCase calculateGameScoreUseCase;
+
+    @Transactional
+    public void execute(String username) throws GameAlreadyFinishedException {
+
+        Game game = findActiveGameUseCase.execute(username);
+        if (Objects.isNull(game)) {
+            throw new GameNotStartedException("The game is not started yet! You can start a new game");
+        }
         if (Objects.nonNull(game)) {
             game.setGameStatus(GameStatus.GAME_OVER);
-            List<Round> pendingRounds = roundGateway.findByGameIdAndStatus(game.getId(), RoundStatus.PENDING.name());
+            List<Round> pendingRounds = findPendingRoundsUseCase.execute(game.getId());
             pendingRounds.forEach(game::removeRound);
             gameGateway.save(game);
             roundGateway.deleteAll(pendingRounds);
+
+            Double score = calculateGameScoreUseCase.execute(game.getId());
+            Ranking ranking = new Ranking();
+            ranking.setGame(game);
+            ranking.setScore(score);
+            rankingGateway.save(ranking);
         }
     }
-
-//    @Transactional
-//    public void execute2(String username) {
-//
-//        GameEntity game = gameRepository.findByStatusAndPlayerUsername(GameStatus.ACTIVE.name(), username);
-//        if (Objects.nonNull(game)) {
-//            game.setStatus(GameStatus.GAME_OVER.name());
-//            List<RoundEntity> pendingRounds = roundRepository.findByGameIdAndStatus(game.getId(), RoundStatus.PENDING.name());
-//            pendingRounds.forEach(roundEntity -> game.removeRound(roundEntity));
-//            gameRepository.save(game);
-//            roundRepository.deleteAll(pendingRounds);
-//        }
-//    }
 
 }

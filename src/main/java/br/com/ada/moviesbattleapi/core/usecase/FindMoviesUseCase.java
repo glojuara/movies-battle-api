@@ -10,15 +10,10 @@ import java.util.List;
 @Service
 public class FindMoviesUseCase {
 
-//    @Autowired
-//    private MovieRepository movieRepository;
-
     @Autowired
     private MovieGateway movieGateway;
 
     public List<Movie> execute() {
-//        List<MovieEntity> movies = movieRepository.findAll();
-//        return movies.stream().map(MovieEntityMapper::map).collect(Collectors.toList());
         return movieGateway.findAll();
     }
 

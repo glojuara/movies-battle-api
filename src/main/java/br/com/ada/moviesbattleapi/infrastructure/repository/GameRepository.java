@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface GameRepository extends JpaRepository<GameEntity, Integer> {
 
-    GameEntity findByStatusAndPlayerUsername(String status, String username);
+    GameEntity findFirstByStatusAndPlayerUsername(String status, String username);
 
 }

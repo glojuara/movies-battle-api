@@ -1,4 +1,4 @@
-package br.com.ada.moviesbattleapi.adapters.gateway.mapper;
+package br.com.ada.moviesbattleapi.adapters.gateway.mapper.entity;
 
 import br.com.ada.moviesbattleapi.core.domain.Movie;
 import br.com.ada.moviesbattleapi.infrastructure.repository.entity.MovieEntity;

@@ -1,4 +1,4 @@
-package br.com.ada.moviesbattleapi.core.domain.exception;
+package br.com.ada.moviesbattleapi.core.domain.enums;
 
 public enum RoundStatus {
     PENDING,

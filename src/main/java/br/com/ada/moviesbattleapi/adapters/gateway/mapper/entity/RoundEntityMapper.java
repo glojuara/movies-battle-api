@@ -1,8 +1,8 @@
-package br.com.ada.moviesbattleapi.adapters.gateway.mapper;
+package br.com.ada.moviesbattleapi.adapters.gateway.mapper.entity;
 
 import br.com.ada.moviesbattleapi.core.domain.Movie;
 import br.com.ada.moviesbattleapi.core.domain.Round;
-import br.com.ada.moviesbattleapi.core.domain.exception.RoundStatus;
+import br.com.ada.moviesbattleapi.core.domain.enums.RoundStatus;
 import br.com.ada.moviesbattleapi.infrastructure.repository.entity.*;
 
 import java.util.List;
