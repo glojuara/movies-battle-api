@@ -7,6 +7,7 @@ import br.com.ada.moviesbattleapi.core.usecase.FindActiveGameOrCreateUseCase;
 import br.com.ada.moviesbattleapi.core.usecase.EndGameUseCase;
 import br.com.ada.moviesbattleapi.core.usecase.NextRoundUseCase;
 import br.com.ada.moviesbattleapi.core.usecase.RoundAnswerUseCase;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,17 +35,18 @@ public class GameController {
     private RoundAnswerUseCase roundAnswerUseCase;
 
     @GetMapping("/start/{username}")
-    public ResponseEntity<Game> newGame(@PathVariable final String username) throws GameAlreadyStartedException {
+    public ResponseEntity<Game> start(@PathVariable final String username) throws GameAlreadyStartedException {
         final Game game = findActiveGameOrCreateUseCase.execute(username);
         return ResponseEntity.ok(game);
     }
 
+
     @GetMapping("/stop/{username}")
-    public void endGame(@PathVariable final String username) throws GameAlreadyFinishedException {
+    public void stop(@PathVariable final String username) throws GameAlreadyFinishedException {
         endGameUseCase.execute(username);
     }
 
-    @GetMapping("/next-round/{username}")
+    @GetMapping("/quiz/{username}")
     public ResponseEntity<Round> nextRound(@PathVariable final String username) throws GameNotStartedException {
         final Round round = nextRoundUseCase.execute(username);
         if (Objects.isNull(round)) return ResponseEntity.noContent().build();
