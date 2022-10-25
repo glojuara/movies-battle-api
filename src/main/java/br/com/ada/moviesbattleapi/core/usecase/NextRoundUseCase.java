@@ -2,7 +2,6 @@ package br.com.ada.moviesbattleapi.core.usecase;
 
 import br.com.ada.moviesbattleapi.core.domain.Game;
 import br.com.ada.moviesbattleapi.core.domain.Round;
-import br.com.ada.moviesbattleapi.core.domain.exception.GameAlreadyFinishedException;
 import br.com.ada.moviesbattleapi.core.domain.exception.GameNotStartedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,9 +29,7 @@ public class NextRoundUseCase {
 
         List<Round> rounds = findPendingRoundsUseCase.execute(game.getId());
         if (rounds.isEmpty()) {
-            try {
-                endGameUseCase.execute(username);
-            } catch (GameAlreadyFinishedException e) {}
+            endGameUseCase.execute(username);
             return null;
         }
         return rounds.get(0);

@@ -1,7 +1,7 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The original package name 'br.com.ada.movieEntities-battle-api' is invalid and this project uses 'br.com.ada.moviesbattleapi' instead.
+* The original package name 'br.com.ada.movies-battle-api' is invalid and this project uses 'br.com.ada.moviesbattleapi' instead.
 
 # Getting Started
 

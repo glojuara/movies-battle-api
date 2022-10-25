@@ -4,7 +4,6 @@ import br.com.ada.moviesbattleapi.core.domain.Game;
 import br.com.ada.moviesbattleapi.core.domain.enums.GameStatus;
 import br.com.ada.moviesbattleapi.core.domain.Ranking;
 import br.com.ada.moviesbattleapi.core.domain.Round;
-import br.com.ada.moviesbattleapi.core.domain.exception.GameAlreadyFinishedException;
 import br.com.ada.moviesbattleapi.core.domain.exception.GameNotStartedException;
 import br.com.ada.moviesbattleapi.core.ports.GameGateway;
 import br.com.ada.moviesbattleapi.core.ports.RankingGateway;
@@ -38,7 +37,7 @@ public class EndGameUseCase {
     private CalculateGameScoreUseCase calculateGameScoreUseCase;
 
     @Transactional
-    public void execute(String username) throws GameAlreadyFinishedException {
+    public void execute(String username) {
 
         Game game = findActiveGameUseCase.execute(username);
         if (Objects.isNull(game)) {

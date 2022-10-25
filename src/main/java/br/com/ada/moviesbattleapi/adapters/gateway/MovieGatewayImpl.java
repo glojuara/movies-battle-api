@@ -61,7 +61,6 @@ public class MovieGatewayImpl implements MovieGateway {
                 movieDetail.setPartner(movie.getPartner());
                 movieDetail.setPartnerId(movie.getPartnerId());
                 return movieDetail;
-
             default: 
                 throw new PartnerNotFoundException("Partner not found");
 

@@ -1,0 +1,61 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "urlPattern": "(.*)i=tt3896198(.*)",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\"imdbRating\":\"8.5\",\"imdbVotes\":\"1\",\"imdbID\":\"tt3896198\"}",
+        "headers": {
+          "X-Application-Context": "application:-1",
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "(.*)i=tt0848228(.*)",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\"imdbRating\":\"8.5\",\"imdbVotes\":\"2\",\"imdbID\":\"tt0848228\"}",
+        "headers": {
+          "X-Application-Context": "application:-1",
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "(.*)i=tt10648342(.*)",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\"imdbRating\":\"8.5\",\"imdbVotes\":\"3\",\"imdbID\":\"tt10648342\"}",
+        "headers": {
+          "X-Application-Context": "application:-1",
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "(.*)i=tt6290396(.*)",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\"imdbRating\":\"8.5\",\"imdbVotes\":\"4\",\"imdbID\":\"tt6290396\"}",
+        "headers": {
+          "X-Application-Context": "application:-1",
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  ]
+}
+

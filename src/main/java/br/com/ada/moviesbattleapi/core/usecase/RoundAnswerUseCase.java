@@ -37,8 +37,7 @@ public class RoundAnswerUseCase {
     @Autowired
     private FindPendingRoundsUseCase findPendingRoundsUseCase;
 
-    @Transactional
-    public void execute(Integer gameId, Integer roundId, Integer movieId) throws WrongAnswerException, GameOverException {
+    public void execute(Integer gameId, Integer roundId, Integer movieId) {
 
         Game game = gameGateway.findById(gameId);
 
