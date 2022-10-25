@@ -1,35 +1,31 @@
-# Read Me First
-The following was discovered as part of building this project:
+# Read Me
+* [Open API Documentation](http://localhost:8080/swagger-ui/index.html)
+* [Console H2](http://localhost:8080/h2-console/)
 
-* The original package name 'br.com.ada.movies-battle-api' is invalid and this project uses 'br.com.ada.moviesbattleapi' instead.
 
-# Getting Started
+## Game Rules
 
-### Reference Documentation
-For further reference, please consider the following sections:
+- The player needs be authenticated to start the game
+- After start the game, the player can access the quiz 
+- On the quiz the player needs chose between two movies
+- If the movie chosen is the highest scoring movie the player won points and can continue
+- In each game the player can wrong 3 times
+- If the player wrong 3 times, the game is ended 
+- When the game is ended the score of player is calculated based on the rule: score = hits * ((hits / answers) * 100 )
 
-* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
-* [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/2.7.5/maven-plugin/reference/html/)
-* [Create an OCI image](https://docs.spring.io/spring-boot/docs/2.7.5/maven-plugin/reference/html/#build-image)
-* [Spring Web](https://docs.spring.io/spring-boot/docs/2.7.5/reference/htmlsingle/#web)
-* [Spring Data JPA](https://docs.spring.io/spring-boot/docs/2.7.5/reference/htmlsingle/#data.sql.jpa-and-spring-data)
-* [OpenFeign](https://docs.spring.io/spring-cloud-openfeign/docs/current/reference/html/)
-* [Spring Security](https://docs.spring.io/spring-boot/docs/2.7.5/reference/htmlsingle/#web.security)
-* [Contract Stub Runner](https://cloud.spring.io/spring-cloud-contract/reference/htmlsingle/#features-stub-runner)
+### Additional Information
+3 users will be loaded to the database when the application start.
+You can add new user modifying the class br.com.ada.moviesbattleapi.infrastructure.repository.seed.UserSeed
 
-### Guides
-The following guides illustrate how to use some features concretely:
+- username: player1
+- password: pwd1
 
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/rest/)
-* [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
-* [Securing a Web Application](https://spring.io/guides/gs/securing-web/)
-* [Spring Boot and OAuth2](https://spring.io/guides/tutorials/spring-boot-oauth2/)
-* [Authenticating a User with LDAP](https://spring.io/guides/gs/authenticating-ldap/)
 
-### Additional Links
-These additional references should also help you:
+- username: player2
+- password: pwd2
 
-* [Declarative REST calls with Spring Cloud OpenFeign sample](https://github.com/spring-cloud-samples/feign-eureka)
 
+- username: player3
+- password: pwd3
+
+The movies are loaded from data.sql into main/resources
