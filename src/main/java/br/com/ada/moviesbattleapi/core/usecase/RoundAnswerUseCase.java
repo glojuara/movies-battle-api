@@ -9,10 +9,8 @@ import br.com.ada.moviesbattleapi.core.domain.exception.WrongAnswerException;
 import br.com.ada.moviesbattleapi.core.ports.GameGateway;
 import br.com.ada.moviesbattleapi.core.ports.MovieGateway;
 import br.com.ada.moviesbattleapi.core.ports.RoundGateway;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.text.MessageFormat;
 import java.util.Comparator;
 import java.util.List;
@@ -22,20 +20,20 @@ import java.util.stream.Collectors;
 @Service
 public class RoundAnswerUseCase {
 
-    @Autowired
     private RoundGateway roundGateway;
-
-    @Autowired
     private GameGateway gameGateway;
-
-    @Autowired
     private MovieGateway movieGateway;
-
-    @Autowired
     private EndGameUseCase endGameUseCase;
-
-    @Autowired
     private FindPendingRoundsUseCase findPendingRoundsUseCase;
+
+    public RoundAnswerUseCase(RoundGateway roundGateway, GameGateway gameGateway, MovieGateway movieGateway,
+                              EndGameUseCase endGameUseCase, FindPendingRoundsUseCase findPendingRoundsUseCase) {
+        this.roundGateway = roundGateway;
+        this.gameGateway = gameGateway;
+        this.movieGateway = movieGateway;
+        this.endGameUseCase = endGameUseCase;
+        this.findPendingRoundsUseCase = findPendingRoundsUseCase;
+    }
 
     public void execute(Integer gameId, Integer roundId, Integer movieId) {
 

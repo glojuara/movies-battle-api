@@ -11,8 +11,11 @@ import java.util.List;
 @Service
 class FindPendingRoundsUseCase {
 
-    @Autowired
     private RoundGateway roundGateway;
+
+    public FindPendingRoundsUseCase(RoundGateway roundGateway) {
+        this.roundGateway = roundGateway;
+    }
 
     public List<Round> execute(Integer gameId) {
         List<Round> rounds = roundGateway.findByGameIdAndStatus(gameId, RoundStatus.PENDING.name());

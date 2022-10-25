@@ -9,8 +9,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class FindActiveGameUseCase {
 
-    @Autowired
     private GameGateway gameGateway;
+
+    public FindActiveGameUseCase(GameGateway gameGateway) {
+        this.gameGateway = gameGateway;
+    }
 
     public Game execute(String username) {
         Game game = gameGateway.findByStatusAndPlayerUsername(GameStatus.ACTIVE.name(), username);

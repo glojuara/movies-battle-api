@@ -18,17 +18,18 @@ import java.util.Objects;
 @Service
 public class CreateGameUseCase {
 
-    @Autowired
     private FindActiveGameUseCase findActiveGameUseCase;
-
-    @Autowired
     private PlayerGateway playerGateway;
-
-    @Autowired
     private MovieGateway movieGateway;
-
-    @Autowired
     private GameGateway gameGateway;
+
+    public CreateGameUseCase(FindActiveGameUseCase findActiveGameUseCase,
+                             PlayerGateway playerGateway, MovieGateway movieGateway, GameGateway gameGateway) {
+        this.findActiveGameUseCase = findActiveGameUseCase;
+        this.playerGateway = playerGateway;
+        this.movieGateway = movieGateway;
+        this.gameGateway = gameGateway;
+    }
 
     @Transactional
     public Game execute(String username) {

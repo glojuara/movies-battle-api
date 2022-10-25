@@ -2,15 +2,17 @@ package br.com.ada.moviesbattleapi.core.usecase;
 
 import br.com.ada.moviesbattleapi.core.domain.enums.RoundStatus;
 import br.com.ada.moviesbattleapi.core.ports.RoundGateway;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class CalculateGameScoreUseCase {
 
-    @Autowired
     private RoundGateway roundGateway;
+
+    public CalculateGameScoreUseCase(RoundGateway roundGateway) {
+        this.roundGateway = roundGateway;
+    }
 
     public Double execute(final Integer gameId) {
         Integer success = roundGateway.findByGameIdAndStatus(gameId, RoundStatus.SUCCESS.name()).size();

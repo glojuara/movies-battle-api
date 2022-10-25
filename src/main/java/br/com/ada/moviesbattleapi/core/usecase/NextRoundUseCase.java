@@ -12,14 +12,16 @@ import java.util.Objects;
 @Service
 public class NextRoundUseCase {
 
-    @Autowired
     private FindPendingRoundsUseCase findPendingRoundsUseCase;
-
-    @Autowired
     private EndGameUseCase endGameUseCase;
-
-    @Autowired
     private FindActiveGameUseCase findActiveGameUseCase;
+
+    public NextRoundUseCase(FindPendingRoundsUseCase findPendingRoundsUseCase, EndGameUseCase endGameUseCase,
+                            FindActiveGameUseCase findActiveGameUseCase) {
+        this.findPendingRoundsUseCase = findPendingRoundsUseCase;
+        this.endGameUseCase = endGameUseCase;
+        this.findActiveGameUseCase = findActiveGameUseCase;
+    }
 
     public Round execute(String username) throws GameNotStartedException {
         Game game = findActiveGameUseCase.execute(username);

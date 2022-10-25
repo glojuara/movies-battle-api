@@ -8,7 +8,6 @@ import br.com.ada.moviesbattleapi.core.domain.exception.GameNotStartedException;
 import br.com.ada.moviesbattleapi.core.ports.GameGateway;
 import br.com.ada.moviesbattleapi.core.ports.RankingGateway;
 import br.com.ada.moviesbattleapi.core.ports.RoundGateway;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -18,23 +17,24 @@ import java.util.Objects;
 @Service
 public class EndGameUseCase {
 
-    @Autowired
     private FindActiveGameUseCase findActiveGameUseCase;
-
-    @Autowired
     private FindPendingRoundsUseCase findPendingRoundsUseCase;
-
-    @Autowired
     private RoundGateway roundGateway;
-
-    @Autowired
     private GameGateway gameGateway;
-
-    @Autowired
     private RankingGateway rankingGateway;
-
-    @Autowired
     private CalculateGameScoreUseCase calculateGameScoreUseCase;
+
+    public EndGameUseCase(FindActiveGameUseCase findActiveGameUseCase,
+                          FindPendingRoundsUseCase findPendingRoundsUseCase, RoundGateway roundGateway,
+                          GameGateway gameGateway, RankingGateway rankingGateway,
+                          CalculateGameScoreUseCase calculateGameScoreUseCase) {
+        this.findActiveGameUseCase = findActiveGameUseCase;
+        this.findPendingRoundsUseCase = findPendingRoundsUseCase;
+        this.roundGateway = roundGateway;
+        this.gameGateway = gameGateway;
+        this.rankingGateway = rankingGateway;
+        this.calculateGameScoreUseCase = calculateGameScoreUseCase;
+    }
 
     @Transactional
     public void execute(String username) {
